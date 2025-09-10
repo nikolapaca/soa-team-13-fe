@@ -1,0 +1,61 @@
+<div class="parent"> 
+    <div class="container" [ngClass]="isSignDivVisiable ? 'active' :'' " id="container">
+        <div class="form-container sign-up" >
+            <form *ngIf="!isRegister" [formGroup]="registerForm" (ngSubmit)="onRegister()">
+                <h1>Create Account</h1>
+                <br>
+            
+                <input type="text" formControlName="username" placeholder="Username" required>
+                <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched">
+                  <small *ngIf="registerForm.get('username')?.errors?.['required']">Username is required.</small>
+                </div>
+            
+                <input type="email" formControlName="email" placeholder="Email" required>
+                <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+                  <small *ngIf="registerForm.get('email')?.errors?.['required']">Email is required.</small>
+                  <small *ngIf="registerForm.get('email')?.errors?.['email']">Enter a valid email.</small>
+                </div>
+            
+                <input type="password" formControlName="password" placeholder="Password" required>
+                <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+                  <small *ngIf="registerForm.get('password')?.errors?.['required']">Password is required.</small>
+                  <small *ngIf="registerForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters long.</small>
+                </div>
+            
+                <select formControlName="role" required>
+                    <option value="">Select Role</option>
+                    <option value="tourist">Tourist</option>
+                    <option value="guide">Guide</option>
+                </select>
+                <div *ngIf="registerForm.get('role')?.invalid && registerForm.get('role')?.touched">
+                    <small *ngIf="registerForm.get('role')?.errors?.['required']">Role is required.</small>
+                </div>
+                <button type="submit">Sign Up</button>
+            </form>
+        </div>
+        <div class="form-container sign-in" >
+            <form>
+                <h1>Sign In</h1>
+                <input type="email" name="email" [(ngModel)]="loginDetails.email" placeholder="Email">
+                <input type="password" name="password"   [(ngModel)]="loginDetails.password" placeholder="Password">
+                <small>{{loginErrorMessage}}</small>
+
+                <button (click)="onLogin()">Sign In</button>
+            </form>
+        </div>
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-left">
+                    <h1>Welcome Back!</h1>
+                    <p>Enter your personal details to use all of site features</p>
+                    <button type="button" class="hidden" id="login" (click)="isSignDivVisiable = false">Sign In</button>
+                </div>
+                <div class="toggle-panel toggle-right">
+                    <h1>Hello, Friend!</h1>
+                    <p>Register with your personal details to use all of site features</p>
+                    <button type="button" class="hidden" id="register" (click)="isSignDivVisiable = true">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

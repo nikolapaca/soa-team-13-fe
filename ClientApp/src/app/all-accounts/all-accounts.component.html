@@ -1,0 +1,27 @@
+<div *ngIf="accounts.length === 0">Loading accounts...</div>
+
+<div>
+  <h2>All accounts</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>username</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let a of accounts">
+        <td>{{ a.id }}</td>
+        <td>{{ a.username }}</td>
+        <td>{{ a.email }}</td>
+        <td>{{ a.role }}</td>
+        <td>
+          <button class="btn btn-danger">Block</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
