@@ -1,0 +1,10 @@
+<div class="navbar">
+    <h1>Tourism</h1>
+    <div class="button-container">
+        <button *ngIf="getToken() !== null && role === 'admin'" (click)="allAccounts()">All accounts</button>
+        <button *ngIf="getToken() !== null && role !== 'admin'" (click)="map()">Map</button>    
+        <button *ngIf="getToken() === null" (click)="login()">Login</button>
+        <button *ngIf="getToken() !== null" (click)="logout()">Logout</button>
+    </div>
+
+</div>
