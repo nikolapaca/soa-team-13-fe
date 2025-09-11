@@ -15,4 +15,16 @@ export class TourService{
   addKeyPoint(keyPoint: KeyPoint): Observable<KeyPoint> {
     return this.http.post<KeyPoint>('http://localhost:8084/key-points/', keyPoint)
   }
+
+  getTourById(tourId: number): Observable<Tour> {
+    return this.http.get<Tour>('http://localhost:8084/tours/' + tourId)
+  }
+
+  updateTour(tourId: number, tour: Tour): Observable<Tour> {
+    return this.http.put<Tour>('http://localhost:8084/tours/' + tourId, tour)
+  }
+
+  deleteKeyPoint(keyPointId: number) {
+    return this.http.delete<void>('http://localhost:8084/key-points/' + keyPointId)
+  }
 }

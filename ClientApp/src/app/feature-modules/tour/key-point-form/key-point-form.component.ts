@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { TourService } from '../tour.service';
 import { KeyPoint } from '../model/keyPoint.model';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Tour } from '../model/tour.model';
 
 @Component({
   selector: 'app-key-point-form',
@@ -21,7 +23,38 @@ export class KeyPointFormComponent {
   description: string = '';
   selectedImage: File | null = null;
 
-  constructor(private service: TourService){ }
+  tourId!: number;
+  tour: Tour = {
+    id: 0,
+    name: '',
+    difficulty: 0,
+    description: '',
+    cost: 0,
+    status: '',
+    tags: '',
+    keyPoints: [],
+    length: 0,
+    authorId: '',
+    image: '',
+    reviews: []
+  };
+
+  constructor(private service: TourService, private route: ActivatedRoute, private router: Router){ }
+
+  ngOnInit(): void{
+    this.tourId = Number(this.route.snapshot.paramMap.get('tourId'));
+    console.log('Tour ID:', this.tourId);
+
+      this.service.getTourById(this.tourId).subscribe({
+      next : (result) =>{
+          this.tour = {
+            ...result,
+            reviews: result.reviews ?? []
+          };
+          console.log("DOBAVIO SAM TURU: ", result);
+      }
+    })
+  }
 
 onFileSelected(e: Event) {
   const input = e.target as HTMLInputElement;
@@ -41,17 +74,15 @@ onCreate() {
     longitude: this.lng
   };
 
-  this.service.addKeyPoint(keyPoint).subscribe({
+  this.tour?.keyPoints.push(keyPoint);
+
+  console.log("OVO SALJEM: ", this.tour);
+  this.service.updateTour(this.tourId, this.tour!).subscribe({
       next : (result) =>{
-          console.log("DODAT KEY POINT: ", result);
+          console.log("OVO SALJEM 222: ", this.tour);
+          this.router.navigate(['/tour/', this.tourId]);
       }
     })
-
-    // this.name = "";
-    // this.description = "";
-    // this.imagePreview = "";
-    // this.lat = 0;
-    // this.lng = 0;
 }
 
 onCoords({ lat, lng }: { lat: number; lng: number }) {
