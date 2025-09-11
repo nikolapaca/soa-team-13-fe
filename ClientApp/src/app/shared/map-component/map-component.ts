@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, EventEmitter, Output } from '@angular/core';
 import * as L from 'leaflet';
 
 @Component({
@@ -9,6 +9,8 @@ import * as L from 'leaflet';
 export class MapComponent implements AfterViewInit {
   private map!: L.Map;
   private marker: L.Marker | undefined;
+
+  @Output() pointSelected = new EventEmitter<{ lat: number; lng: number }>();
 
   constructor() {}
 
@@ -62,6 +64,8 @@ export class MapComponent implements AfterViewInit {
       console.log(
         'Kliknuli ste na mapu na geografskoj širini: ' + lat + ' i dužini: ' + lng
       );
+
+      this.pointSelected.emit({ lat, lng });
 
       localStorage.setItem('lat', lat.toString());
       localStorage.setItem('long', lng.toString());

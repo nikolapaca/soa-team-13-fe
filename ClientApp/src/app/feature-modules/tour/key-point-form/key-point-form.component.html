@@ -1,0 +1,42 @@
+<p>Kreiraj kljucnu tacku</p>
+
+<div class="kp-layout">
+  <div class="kp-map">
+    <app-map (pointSelected)="onCoords($event)"></app-map>
+  </div>
+
+  <form class="kp-form" (ngSubmit)="onCreate()">
+    <h2 class="kp-title">Novi Key Point</h2>
+
+    <div class="form-group">
+      <label for="name">Naziv</label>
+      <input id="name" type="text" name="name" placeholder="Unesi naziv" [(ngModel)]="name" required>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Opis</label>
+      <textarea id="description" name="description" rows="4" placeholder="Opis..." [(ngModel)]="description" required></textarea>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="lat">Geografska širina (lat)</label>
+        <input id="lat" type="text" name="lat" [value]="lat" [(ngModel)]="lat" disabled>
+      </div>
+      <div class="form-group">
+        <label for="lng">Geografska dužina (lng)</label>
+        <input id="lng" type="text" name="lng" [value]="lng" [(ngModel)]="lng" disabled>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="image">Slika</label>
+      <input id="image" type="file" accept="image/*" (change)="onFileSelected($event)" name="selectedImage" [(ngModel)]="selectedImage">
+      <div class="image-preview" id="imagePreview" *ngIf="imagePreview">
+        <img [src]="imagePreview" alt="Pregled slike">
+      </div>
+    </div>
+
+    <button type="submit" class="btn-primary">Kreiraj</button>
+  </form>
+</div>
