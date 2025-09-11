@@ -46,9 +46,12 @@ export class NavbarComponent {
   login(){
     this.router.navigate(["login"]);
   }
-   map(){
-    this.router.navigate(["map"]);
-   }
+  map(){
+  this.router.navigate(["map"]);
+  }
+  myTours(){
+    this.router.navigate(["tours"])
+  }
 
   getToken(): string|null{
     return localStorage.getItem("token")

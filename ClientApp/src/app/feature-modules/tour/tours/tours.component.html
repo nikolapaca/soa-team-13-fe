@@ -1,1 +1,106 @@
-<p>desi desi!</p>
+<img class="pic-design" src="https://www.guide.com/img/meta_guide.png">
+<div class="img-cover">
+  <h1 class="header_my_profile">
+    Your tours
+  </h1>
+  <button (click)="onAddClicked()">
+    Add new tour
+  </button>
+</div>
+
+<div class="cards">
+  <div class="tour-card" *ngFor="let t of tours">
+    <h1>{{ t.name }}</h1>
+
+    <!-- <button
+      mat-icon-button
+      [matMenuTriggerFor]="menu"
+      aria-label="More options"
+      matTooltip="More options"
+      class="menu-button"
+    >
+      <mat-icon>more_vert</mat-icon>
+    </button>
+
+    <mat-menu #menu="matMenu" class="top-right-menu">
+      <button mat-menu-item (click)="onEditClicked(t)" *ngIf="loggedInUser.role == 'author'">
+        <mat-icon>edit</mat-icon>
+        <span>Edit</span>
+      </button>
+
+      <button mat-menu-item (click)="deleteTour(t)" *ngIf="loggedInUser.role == 'author'">
+        <mat-icon>delete</mat-icon>
+        <span>Delete</span>
+      </button>
+
+      <button mat-menu-item (click)="showTourEquipment(t)" *ngIf="loggedInUser.role == 'author'">
+        <mat-icon>add_to_photos</mat-icon>
+        <span>Equipments</span>
+      </button>
+
+      <button mat-menu-item (click)="viewKeyPoints(t.id)" *ngIf="loggedInUser.role == 'author'">
+        <mat-icon>flag</mat-icon>
+        <span>KeyPoints</span>
+      </button>
+
+      <button mat-menu-item (click)="publish(t)" *ngIf="!(getStatus(t.status) === 'Published') && !(getStatus(t.status) === 'Archived') && loggedInUser.role == 'author'">
+        <mat-icon>publish</mat-icon>
+        <span>Publish</span>
+      </button>
+
+      <button mat-menu-item (click)="archive(t)" *ngIf="getStatus(t.status) === 'Published' && loggedInUser.role == 'author'">
+        <mat-icon>archive</mat-icon>
+        <span>Archive</span>
+      </button>
+
+      <button mat-menu-item (click)="reactivateTour(t)" *ngIf="getStatus(t.status) === 'Archived' && loggedInUser.role == 'author'">
+        <mat-icon>unarchive</mat-icon>
+        <span>Reactivate</span>
+      </button>
+
+      <button mat-menu-item (click)="reportProblem(t)" *ngIf="loggedInUser.role == 'tourist'">
+        <mat-icon>report</mat-icon>
+        <span>Report</span>
+      </button>
+    </mat-menu> -->
+
+    <img src="https://www.guide.com/img/meta_guide.png" alt="Tour Image">
+
+    <div class="tour-info">
+      <h3>Description:</h3>
+      <p>{{ t.description }}</p>
+      <div>
+        <h3>Difficulty:</h3>
+        <p>{{ getDifficulty(t.difficulty) }}</p>
+      </div>
+      <div>
+        <h3>Status:</h3>
+        <p>{{ getStatus(t.status) }}</p>
+      </div>
+      <div class="tags">
+        <h3>Tags:</h3>
+        <p *ngFor="let tag of t.tags.split(',')">#{{ tag }}&nbsp;</p>
+      </div>
+      <div>
+        <h3>Length:</h3>
+        <p>{{ t.length }} km</p>
+      </div>
+      <!-- <div>
+        <h3>Duration:</h3>
+        <mat-icon>directions_walk</mat-icon>
+        <p>{{ hasTourDuration(t) }} min</p>
+      </div> -->
+      <div>
+        <h3>Cost:</h3>
+        <p>{{ t.cost }} $</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="modal" *ngIf="shouldRenderTourForm" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <xp-tour-form (tourUpdated)="getTours()" [tour]="selectedTour!" [shouldEdit]="shouldEdit"></xp-tour-form>
+  </div>
+</div> -->
