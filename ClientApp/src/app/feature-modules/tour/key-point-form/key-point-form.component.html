@@ -2,10 +2,12 @@
 
 <div class="kp-layout">
   <div class="kp-map">
-    <app-map (pointSelected)="onCoords($event)"></app-map>
+    <app-map
+    (pointSelected)="onCoords($event)"
+    [initialPosition]="keyPoint"></app-map>
   </div>
 
-  <form class="kp-form" (ngSubmit)="onCreate()">
+  <form class="kp-form" (ngSubmit)="onSubmit()">
     <h2 class="kp-title">Novi Key Point</h2>
 
     <div class="form-group">

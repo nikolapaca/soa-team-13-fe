@@ -111,6 +111,7 @@ export class TourFormComponent implements OnInit {
       length: 0,
       authorId: authorId,
       reviews : [],
+      keyPoints : [],
       image: ""
     };
     this.http.post<Tour>('http://localhost:8070/tours/', newTour, {headers: {'Authorization': `Bearer ${token}`}}).subscribe({

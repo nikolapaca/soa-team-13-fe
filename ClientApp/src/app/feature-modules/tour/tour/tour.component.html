@@ -1,0 +1,75 @@
+<div class="kp-layout">
+  <!-- MAPA: ~60% širine (flex:2) -->
+  <div class="kp-map">
+    <app-map
+      (pointSelected)="onCoords($event)"
+      [points]="tour?.keyPoints ?? []"
+    ></app-map>
+  </div>
+
+  <!-- DETALJI TURE: ~40% (flex:1) -->
+  <div class="details">
+    <form class="tour-form">
+      <h2 class="title">Detalji ture</h2>
+
+      <div class="form-row two-col">
+        <div class="form-group">
+          <label for="name">Naziv</label>
+          <div class="readonly-box">{{ tour?.name }}</div>
+        </div>
+
+        <div class="form-group">
+          <label for="difficulty">Težina</label>
+          <div class="readonly-box">{{ tour?.difficulty }}</div>
+        </div>
+      </div>
+
+      <div class="form-row two-col">
+        <div class="form-group">
+          <label for="cost">Cena</label>
+          <div class="readonly-box">{{ tour?.cost }} RSD</div>
+        </div>
+
+        <div class="form-group">
+          <label for="status">Status</label>
+          <div class="readonly-box">{{ tour?.status }}</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="tags">Tagovi</label>
+        <div class="readonly-box">{{ tour?.tags }}</div>
+      </div>
+
+      <div class="form-group">
+        <label for="length">Dužina (km)</label>
+        <div class="readonly-box">{{ tour?.length }} km</div>
+      </div>
+
+      <div class="form-group">
+        <label for="author">Autor ID</label>
+        <div class="readonly-box">{{ tour?.authorId }}</div>
+      </div>
+
+      <div class="form-group">
+        <label for="desc">Opis</label>
+        <div class="readonly-box multiline">{{ tour?.description }}</div>
+      </div>
+
+      <div class="divider"></div>
+    </form>
+  </div>
+</div>
+
+<div>
+  <button class="add-key-point" (click)="onAddKeyPoint()">Add KeyPoint</button>
+</div>
+
+<div class="key-points">
+    <app-key-point-card
+    *ngFor="let kp of tour?.keyPoints"
+    [tourId]="tourId"
+    [keyPoint]="kp"
+    (delete)="onDeleteKeyPoint($event)">
+  </app-key-point-card>
+</div>
