@@ -1,0 +1,35 @@
+<div class="profile-layout">
+  <!-- LEVO: slika -->
+  <div class="profile-left">
+    <div class="avatar-wrap">
+      <img
+        [src]="profile?.profilePicture"
+        alt="Profilna slika"
+      />
+    </div>
+  </div>
+
+  <!-- DESNO: podaci -->
+  <div class="profile-right">
+    <div class="field">
+      <label>Ime</label>
+      <p class="field-value">{{ profile?.name || '—' }}</p>
+    </div>
+
+    <div class="field">
+      <label>Prezime</label>
+      <p class="field-value">{{ profile?.surname || '—' }}</p>
+    </div>
+
+    <div class="field">
+      <label>Moto</label>
+      <p class="field-value">{{ profile?.motto || '—' }}</p>
+    </div>
+
+    <div class="field">
+      <label>Bio</label>
+      <p class="field-value multiline">{{ profile?.bio || '—' }}</p>
+    </div>
+  </div>
+</div>
+

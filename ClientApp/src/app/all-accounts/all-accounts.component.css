@@ -18,14 +18,15 @@
   background-color: #f9f9f9;
 }
 
-.btn {
+.block-btn{
   padding: 5px 10px;
   color: white;
   background-color: #d9534f;
-  border: none;
+  border: 2px solid white;
+  border-radius: 7px;
   cursor: pointer;
 }
 
-.btn:hover {
+.block-btn:hover {
   background-color: #c9302c;
 }

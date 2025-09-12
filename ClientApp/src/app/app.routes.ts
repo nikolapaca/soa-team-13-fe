@@ -6,6 +6,7 @@ import { ToursComponent } from './feature-modules/tour/tours/tours.component';
 import { KeyPointFormComponent } from './feature-modules/tour/key-point-form/key-point-form.component';
 import { TourFormComponent } from './feature-modules/tour/tour-form/tour-form.component';
 import { TourComponent } from './feature-modules/tour/tour/tour.component';
+import { ProfileComponent } from './profile/profile.component';
 
 export const routes: Routes = [
     {path: "login", component: LoginComponent},
@@ -15,5 +16,6 @@ export const routes: Routes = [
     {path: 'add-tour', component: TourFormComponent},
     {path: 'key-point/:tourId/create', component: KeyPointFormComponent, pathMatch: 'full' },
     {path: 'key-point/:tourId/:kpId/update', component: KeyPointFormComponent },
-    {path: 'tour/:tourId', component: TourComponent}
+    {path: 'tour/:tourId', component: TourComponent},
+    {path: 'profile', component: ProfileComponent}
 ];

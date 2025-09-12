@@ -9,7 +9,7 @@
 </div>
 
 <div class="cards">
-  <div class="tour-card" *ngFor="let t of tours">
+  <div class="tour-card" *ngFor="let t of tours" (click)="onCardClick(t.id)">
     <h1>{{ t.name }}</h1>
 
     <!-- <button

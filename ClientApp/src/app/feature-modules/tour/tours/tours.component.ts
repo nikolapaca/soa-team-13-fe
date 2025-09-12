@@ -71,4 +71,8 @@ export class ToursComponent {
   onAddClicked() {
     this.router.navigate(["add-tour"]);
   }
+
+  onCardClick(tourId: number): void{
+    this.router.navigate(['/tour', tourId]);
+  }
 }

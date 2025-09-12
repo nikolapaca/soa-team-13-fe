@@ -19,7 +19,12 @@
         <td>{{ a.email }}</td>
         <td>{{ a.role }}</td>
         <td>
-          <button class="btn btn-danger">Block</button>
+          <button *ngIf="a.role != 'admin'"
+                  class="block-btn"
+                  [disabled]="a.blocked"
+                  (click)="blockUser(a.id)">
+                  {{a.blocked ? 'Blocked' : 'Block'}}
+          </button>
         </td>
       </tr>
     </tbody>

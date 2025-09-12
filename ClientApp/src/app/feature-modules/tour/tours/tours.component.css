@@ -41,7 +41,7 @@
 }
 
 .tour-card {
-    position: relative; 
+    position: relative;
     font-family: Arial, sans-serif;
     max-width: 600px;
     margin: 20px auto;
@@ -49,23 +49,30 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     padding: 20px;
     background-color: #f9f9f9;
+    cursor: pointer;
+    transition: box-shadow 0.3s, transform 0.3s;
   }
-  
+
+.tour-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transform: translateY(-3px);
+}
+
 
   .menu-button {
     position: absolute;
-    top: 20px; 
-    right: 20px; 
-    z-index: 10; 
+    top: 20px;
+    right: 20px;
+    z-index: 10;
   }
-  
+
   .top-right-menu {
     position: absolute;
-    top: 40px; 
-    right: 20px; 
+    top: 40px;
+    right: 20px;
     z-index: 100;
   }
-  
+
 
   .tour-card img {
     width: 100%;
@@ -74,27 +81,27 @@
     object-fit: cover;
     margin-bottom: 20px;
   }
-  
+
   .tour-info {
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   }
-  
+
   .tour-info h3 {
     font-size: 1.1em;
     color: #333;
     margin-bottom: 8px;
   }
-  
+
   .tour-info p {
     font-size: 1em;
     color: #555;
     margin-bottom: 12px;
     line-height: 1.5;
   }
-  
+
   button {
     /* background-color: #031926; */
     background-color: #F2D177;
@@ -106,7 +113,7 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
-  
+
   button:hover {
     background-color: #DBFCFF;
     color: #031926 ;
@@ -123,14 +130,14 @@
     margin-bottom: 8px;
     margin-right: 15px;
   }
-  
+
 
    .tour-info div p {
     font-size: 1em;
     color: #555;
     margin-bottom: 12px;
     line-height: 1.1;
-  } 
+  }
 
 .tour-info div  mat-icon {
   font-size: 1.4em;
@@ -158,12 +165,12 @@
   width: 35%;
   height: 90%;
   position: relative;
-  overflow-y: auto; 
-  
+  overflow-y: auto;
+
   /* max-height: 100%; */
 }
 
-.modal-content .close, 
+.modal-content .close,
 .modal-content-equipment .close {
   position: absolute;
   top: 10px;
@@ -172,12 +179,12 @@
   font-weight: bold;
   cursor: pointer;
   color: black;
-  
+
 }
 
 .tags {
   display: flex;
-  flex-wrap: wrap; 
-  gap: 5px; 
+  flex-wrap: wrap;
+  gap: 5px;
 }
 

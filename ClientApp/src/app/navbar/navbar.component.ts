@@ -49,6 +49,9 @@ export class NavbarComponent {
   map(){
   this.router.navigate(["map"]);
   }
+  profile(){
+    this.router.navigate(["profile"]);
+  }
   myTours(){
     this.router.navigate(["tours"])
   }
