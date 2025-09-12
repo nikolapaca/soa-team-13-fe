@@ -18,11 +18,11 @@ export class TourComponent {
 
   tour?: Tour;
   tourId: number = 1;
+  token: any;
 
   constructor(private router: Router, private route: ActivatedRoute, private service: TourService) { }
 
   ngOnInit(): void{
-
   this.tourId = Number(this.route.snapshot.paramMap.get('tourId'));
 
   this.service.getTourById(this.tourId).subscribe({
