@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter} from '@angular/core';
 import { KeyPoint } from '../model/keyPoint.model';
 import { TourService } from '../tour.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-key-point-card',
@@ -12,6 +13,7 @@ import { TourService } from '../tour.service';
 })
 export class KeyPointCardComponent {
 
+  @Input({ required: true}) tourId!: number;
   @Input({ required: true }) keyPoint!: KeyPoint;
 
   @Output() delete = new EventEmitter<number>();
@@ -20,9 +22,15 @@ export class KeyPointCardComponent {
   imgError  = false;
   readonly placeholder = 'assets/placeholder.jpg';
 
-  constructor(private service: TourService) { }
+  constructor(private service: TourService, private router: Router) { }
 
-  onEditClick()  {  }
+  ngOnInit(){
+
+  }
+
+  onEditClick(){
+    this.router.navigate(['/key-point', this.tourId, this.keyPoint.id, 'update']);
+  }
 
 
   onDeleteClick(){

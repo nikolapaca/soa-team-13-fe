@@ -1,7 +1,10 @@
 <div class="kp-layout">
   <!-- MAPA: ~60% širine (flex:2) -->
   <div class="kp-map">
-    <app-map (pointSelected)="onCoords($event)"></app-map>
+    <app-map
+      (pointSelected)="onCoords($event)"
+      [points]="tour?.keyPoints ?? []"
+    ></app-map>
   </div>
 
   <!-- DETALJI TURE: ~40% (flex:1) -->
@@ -65,6 +68,7 @@
 <div class="key-points">
     <app-key-point-card
     *ngFor="let kp of tour?.keyPoints"
+    [tourId]="tourId"
     [keyPoint]="kp"
     (delete)="onDeleteKeyPoint($event)">
   </app-key-point-card>

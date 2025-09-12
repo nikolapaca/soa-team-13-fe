@@ -36,11 +36,10 @@ export class TourComponent {
   onCoords(p: { lat: number; lng: number }) {}
 
   onAddKeyPoint() {
-    this.router.navigate(['/key-point/', this.tourId]);
+    this.router.navigate(['/key-point', this.tourId, 'create']);
   }
 
   onDeleteKeyPoint(id: number) {
-
     this.service.getTourById(this.tourId).subscribe({
         next : (result) =>{
             this.tour = result;

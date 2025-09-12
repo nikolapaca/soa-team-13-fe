@@ -12,6 +12,7 @@ export const routes: Routes = [
     {path: "map", component: MapComponent},
     {path: "all-accounts", component: AllAccountsComponent},
     {path: 'tours', component: ToursComponent},
-    {path: 'key-point/:tourId', component: KeyPointFormComponent},
+    {path: 'key-point/:tourId/create', component: KeyPointFormComponent, pathMatch: 'full' },
+    {path: 'key-point/:tourId/:kpId/update', component: KeyPointFormComponent },
     {path: 'tour/:tourId', component: TourComponent}
 ];
