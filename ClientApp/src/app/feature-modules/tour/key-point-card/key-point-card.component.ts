@@ -15,6 +15,7 @@ export class KeyPointCardComponent {
 
   @Input({ required: true}) tourId!: number;
   @Input({ required: true }) keyPoint!: KeyPoint;
+  @Input() status!: number;
 
   @Output() delete = new EventEmitter<number>();
 

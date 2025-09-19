@@ -1,5 +1,5 @@
 <div class="kp-card" aria-label="Key point card">
-  <div class="kp-toolbar">
+  <div *ngIf="status === 0" class="kp-toolbar">
     <button class="icon-btn" type="button" (click)="onEditClick()" aria-label="Izmeni">
       <!-- pencil icon -->
       <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">

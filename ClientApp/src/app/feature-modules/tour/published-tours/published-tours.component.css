@@ -1,0 +1,33 @@
+.tour-list {
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+.tour-card {
+  flex: 0 0 calc(33% - 0.75rem); 
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.image {
+  width: 100%;
+}
+
+.tour-card h2 {
+  margin-top: 0;
+}
+
+.first-keypoint {
+  margin-top: 1rem;
+  padding-top: 0.5rem;
+  border-top: 1px dashed #aaa;
+}
+
+.first-keypoint img {
+  width: 40%;
+}

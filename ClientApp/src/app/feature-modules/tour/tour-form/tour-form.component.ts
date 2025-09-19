@@ -20,6 +20,7 @@ import { Tour } from '../model/tour.model';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
+import { TourService } from '../tour.service';
 @Component({
   selector: 'app-tour-form',
   standalone: true,
@@ -54,7 +55,7 @@ export class TourFormComponent implements OnInit {
     image: new FormControl('')
   });
 
-  constructor(private http: HttpClient, private router: Router){}
+  constructor(private http: HttpClient, private router: Router, private service: TourService){}
 
   ngOnInit(): void {
     const defaultTags = ["Hiking", "Walk", "Summer", "Spring", "See", "Mountain", "City", "Village"];
@@ -91,15 +92,6 @@ export class TourFormComponent implements OnInit {
       return
 
     this.tagToString();
-    var authorId = ""
-    var token = localStorage.getItem("token") ? localStorage.getItem("token") : '';
-      if (token) {
-        try {
-          var decodedToken = jwtDecode(token); // Koristite `default`
-          authorId = decodedToken['sub']!;
-        } catch (error) {
-        }
-      }
     const newTour: Tour = {
       id: 0,
       name: this.tourForm.value.name || "",
@@ -109,12 +101,13 @@ export class TourFormComponent implements OnInit {
       status: 0,
       tags: this.tourForm.value.tags || "",
       length: 0,
-      authorId: authorId,
+      authorId: "",
       reviews : [],
       keyPoints : [],
-      image: ""
+      image: "",
+      durations: []
     };
-    this.http.post<Tour>('http://localhost:8070/tours/', newTour, {headers: {'Authorization': `Bearer ${token}`}}).subscribe({
+    this.service.create(newTour).subscribe({
       next: (res) => {
         this.router.navigate(["tours"]);
       }

@@ -39,7 +39,7 @@
 
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>Cost</mat-label>
-    <input matInput formControlName="cost" type="number" />
+    <input matInput formControlName="cost" type="number" readonly="true"/>
     <mat-error *ngIf="tourForm.get('cost')?.hasError('required')">
       Cost is required.
     </mat-error>

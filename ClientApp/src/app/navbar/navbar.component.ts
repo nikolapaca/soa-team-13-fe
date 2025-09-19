@@ -53,16 +53,20 @@ export class NavbarComponent {
     this.router.navigate(["profile"]);
   }
   myTours(){
-    this.router.navigate(["tours"])
+    this.router.navigate(["tours"]);
   }
 
   getToken(): string|null{
-    return localStorage.getItem("token")
+    return localStorage.getItem("token");
   }
 
   logout(){
     localStorage.removeItem("token");
     localStorage.clear();
     this.router.navigate(["login"]);
+  }
+
+  publishedTours(){
+    this.router.navigate(["published-tours"]);
   }
 }
