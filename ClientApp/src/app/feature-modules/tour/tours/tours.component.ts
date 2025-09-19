@@ -16,30 +16,18 @@ import { CommonModule } from '@angular/common';
 export class ToursComponent {
 
   tours: Tour[]=[];
-  // selectedTour: Tour | null = null;
-  // shouldEdit: boolean;
   shouldRenderTourForm: boolean=false;
-  // account: Account | null;
   addTour: boolean = false;
   accountId : string = "";
   token: any;
   constructor(private service: TourService, private router: Router, private http: HttpClient, private cdRef: ChangeDetectorRef){}
 
   ngOnInit(): void{
-    this.token = localStorage.getItem("token") ? localStorage.getItem("token") : '';
-      if (this.token) {
-        try {
-          var decodedToken = jwtDecode(this.token); // Koristite `default`
-          // this.role = this.decodedToken['role'];
-          this.accountId = decodedToken['sub']!
-        } catch (error) {
-        }
-      }
     this.getTours();
   }
 
   getTours(): void {
-    this.http.get<Tour[]>("http://localhost:8070/tours/author/"+this.accountId, {headers: {'Authorization': `Bearer ${this.token}`}}).subscribe({
+    this.service.getForAuthor().subscribe({
       next: (res) => {
         this.tours = res;
         this.cdRef.detectChanges()
@@ -74,5 +62,13 @@ export class ToursComponent {
 
   onCardClick(tourId: number): void{
     this.router.navigate(['/tour', tourId]);
+  }
+
+  hasTourDuration(t: Tour): number{
+    if(t.durations === undefined)
+      return 0;
+    if(t.durations[0] === undefined)
+      return 0;
+    return t.durations[0].duration;
   }
 }

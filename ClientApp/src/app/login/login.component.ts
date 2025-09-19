@@ -5,7 +5,7 @@ import { Account } from '../models/account.model';
 import { LoginDetails } from '../models/logindetails.model';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
+import {jwtDecode} from 'jwt-decode';
 
 @Component({
   selector: 'app-login',
@@ -89,7 +89,23 @@ export class LoginComponent {
     this.http.post<{token: string}>('http://localhost:8070/accounts/login', this.loginDetails).subscribe({
       next: (res) => {
         localStorage.setItem("token", res.token)
-        this.router.navigate(["map"])
+
+        if (res.token) {
+          try {
+            var decodedToken: any = jwtDecode(res.token);
+            var role = decodedToken['role'];
+            if(role === 'admin'){
+              this.router.navigate(['all-accounts'])
+            }
+            else if(role === 'guide'){
+              this.router.navigate(['tours'])
+            }
+            else {
+              this.router.navigate(['published-tours'])
+            }
+          } catch (error) {
+          }
+        }
       },
       error: (err: HttpErrorResponse) => {
         if(err.status === 400)
@@ -98,44 +114,7 @@ export class LoginComponent {
           this.loginErrorMessage = "Account was not find!"
       }
     })
-
-    // this.http.post<any>(`http://localhost:8080/auth/login`, this.loginDetails).subscribe({
-    //   next: (res) =>{
-    //     this.loginErrorMessage = '';
-    //     this.loginDetails.email = '';
-    //     this.loginDetails.password = '';
-    //     // console.log(res);
-    //     localStorage.setItem("jwt", res.accessToken);
-
-    //     const token = res.accessToken;
-    //     const decodedToken = jwtDecode(token);
-    //     console.log("OVAJ SE LOGUJEEEEEE");
-    //     console.log(decodedToken);
-    //     const userRole = (decodedToken as any).role;
-    //     console.log('User role:', userRole);
-    //     if(userRole == 'ROLE_ADMIN'){
-    //       this.router.navigate(["admin-homepage"])
-    //     }else{
-    //       this.router.navigate(["home"])
-    //     }
-    //     this.authService.login(userRole)
-    //   },
-    //   error: (err: HttpErrorResponse) =>{
-    //     if(err.status == 404)
-    //       this.loginErrorMessage = "Account with this email doesnt exist.";
-    //     if(err.status == 401)
-    //       this.loginErrorMessage = "The password is not correct.";
-    //      if(err.status == 406 ){
-    //       this.loginErrorMessage = "You are not acitvate account.";
-    //       this.sendCodeAgain = true;
-    //      }
-    //      localStorage.clear();
-    //   }
-    // })
   }
 
-}
-function jwtDecode(token: any) {
-  throw new Error('Function not implemented.');
 }
 

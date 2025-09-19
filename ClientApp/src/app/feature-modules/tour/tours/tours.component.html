@@ -83,13 +83,13 @@
       </div>
       <div>
         <h3>Length:</h3>
-        <p>{{ t.length }} km</p>
+        <p>{{ t.length | number: '1.2-2'}} km</p>
       </div>
-      <!-- <div>
+      <div>
         <h3>Duration:</h3>
-        <mat-icon>directions_walk</mat-icon>
-        <p>{{ hasTourDuration(t) }} min</p>
-      </div> -->
+        <!-- <mat-icon>directions_walk</mat-icon> -->
+        <p>{{ hasTourDuration(t) | number: '1.2-2'}} min</p>
+      </div>
       <div>
         <h3>Cost:</h3>
         <p>{{ t.cost }} $</p>

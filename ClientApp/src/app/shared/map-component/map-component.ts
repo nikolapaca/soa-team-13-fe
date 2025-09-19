@@ -25,7 +25,7 @@ export class MapComponent implements AfterViewInit {
   private routing?: any;
   private _initialPosition: KeyPoint = DEFAULT_POS;
 
-
+  @Output() distanceAndTime = new EventEmitter<{distance: number, time: number}>();
   @Output() pointSelected = new EventEmitter<{ lat: number; lng: number }>();
   @Input() points: KeyPoint[] = [];
 
@@ -105,6 +105,8 @@ export class MapComponent implements AfterViewInit {
       createMarker: (_i: number, _wp: any) => null
     }).addTo(this.map);
 
+    this.calculateDistance();
+
     this.registerOnClick();
   }
 
@@ -131,23 +133,37 @@ export class MapComponent implements AfterViewInit {
   }
 
   private drawRoute(): void {
-  if (!this.map || !this.routing) return;
+    if (!this.map || !this.routing) return;
 
-  if (!this.routeLayer) this.routeLayer = L.layerGroup().addTo(this.map);
-  this.routeLayer.clearLayers();
-  this.points.forEach((p, i) => {
-    L.marker([+p.latitude, +p.longitude])
-      .bindTooltip(`${i + 1}. ${p.name}`, { direction: 'top', offset: L.point(0, -8) })
-      .addTo(this.routeLayer!);
-  });
+    if (!this.routeLayer) this.routeLayer = L.layerGroup().addTo(this.map);
+    this.routeLayer.clearLayers();
+    this.points.forEach((p, i) => {
+      L.marker([+p.latitude, +p.longitude])
+        .bindTooltip(`${i + 1}. ${p.name}`, { direction: 'top', offset: L.point(0, -8) })
+        .addTo(this.routeLayer!);
+    });
 
-  // prosledi ruting mašini (ovo “snapuje” na puteve)
-  const wps = (this.points || []).map(p => L.latLng(+p.latitude, +p.longitude));
-  if (wps.length >= 2) {
-    this.routing.setWaypoints(wps);
-  } else {
-    this.routing.setWaypoints([]); // nema rute
-    if (wps.length === 1) this.map.setView(wps[0], 15);
+    // prosledi ruting mašini (ovo “snapuje” na puteve)
+    const wps = (this.points || []).map(p => L.latLng(+p.latitude, +p.longitude));
+    if (wps.length >= 2) {
+      this.routing.setWaypoints(wps);
+      this.calculateDistance();
+    } else {
+      this.routing.setWaypoints([]); // nema rute
+      if (wps.length === 1) this.map.setView(wps[0], 15);
+    }
   }
-}
+
+  private calculateDistance(){
+    this.routing.on('routesfound', (event: any) => {
+      const route = event.routes[0];
+      
+      const distance = route.summary.totalDistance / 1000; // u kilometrima
+      const time = route.summary.totalTime / 60; // u minutima
+      console.log(`Dužina: ${distance.toFixed(2)} km`);
+      console.log(`Vreme: ${time.toFixed(2)} minuta`);
+      this.distanceAndTime.emit({ distance, time });
+      
+  });
+  }
 }

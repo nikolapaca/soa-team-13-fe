@@ -1,4 +1,5 @@
 import { KeyPoint } from "./keyPoint.model";
+import { TourDuration } from "./tourDurarion.model";
 import { TourReview } from "./tourReview.model";
 
 export interface Tour {
@@ -13,6 +14,7 @@ export interface Tour {
     authorId: string,
     image: string,
     keyPoints: KeyPoint[],
-    reviews: []
+    reviews: TourReview[],
+    durations: TourDuration[]
 }
 
