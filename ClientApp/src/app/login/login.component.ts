@@ -110,6 +110,8 @@ export class LoginComponent {
       error: (err: HttpErrorResponse) => {
         if(err.status === 400)
           this.loginErrorMessage = "Bad request!";
+        if(err.status === 403)
+          this.loginErrorMessage = "Account is blocked"
         if(err.status === 404)
           this.loginErrorMessage = "Account was not find!"
       }
