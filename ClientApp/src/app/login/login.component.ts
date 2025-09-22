@@ -67,7 +67,7 @@ export class LoginComponent {
       role : this.registerForm.value.role!,
       blocked: false
     };
-    this.http.post<Account>("http://localhost:8070/accounts/", account).subscribe({
+    this.http.post<Account>("http://localhost:8071/accounts", account).subscribe({
       next: (res) => {
         alert("Registration succesfull!");
         this.isSignDivVisiable = false;
@@ -86,7 +86,7 @@ export class LoginComponent {
       this.loginErrorMessage = "Email and password are required!"
     } 
 
-    this.http.post<{token: string}>('http://localhost:8070/accounts/login', this.loginDetails).subscribe({
+    this.http.post<{token: string}>('http://localhost:8071/accounts/login', this.loginDetails).subscribe({
       next: (res) => {
         localStorage.setItem("token", res.token)
 
@@ -109,7 +109,7 @@ export class LoginComponent {
       },
       error: (err: HttpErrorResponse) => {
         if(err.status === 400)
-          this.loginErrorMessage = "Bad request!";
+          this.loginErrorMessage = "Wrong password!";
         if(err.status === 403)
           this.loginErrorMessage = "Account is blocked"
         if(err.status === 404)
