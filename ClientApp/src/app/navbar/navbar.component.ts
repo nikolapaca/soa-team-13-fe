@@ -56,6 +56,10 @@ export class NavbarComponent {
     this.router.navigate(["tours"]);
   }
 
+  blogs(){
+    this.router.navigate(["blogs"]);
+  }
+
   getToken(): string|null{
     return localStorage.getItem("token");
   }

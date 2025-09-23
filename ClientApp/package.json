@@ -33,6 +33,7 @@
     "@angular/router": "^20.2.0",
     "@angular/ssr": "^20.2.0",
     "@types/leaflet": "^1.9.20",
+    "crypto-browserify": "^3.12.1",
     "express": "^5.1.0",
     "jwt-decode": "^4.0.0",
     "leaflet": "^1.9.4",
@@ -42,12 +43,13 @@
     "zone.js": "^0.15.1"
   },
   "devDependencies": {
+    "@angular-devkit/build-angular": "^20.3.2",
     "@angular/build": "^20.2.0",
-    "@angular/cli": "^20.2.0",
+    "@angular/cli": "^20.3.2",
     "@angular/compiler-cli": "^20.2.0",
     "@types/express": "^5.0.1",
     "@types/jasmine": "~5.1.0",
-    "@types/node": "^20.17.19",
+    "@types/node": "^20.19.17",
     "jasmine-core": "~5.9.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",

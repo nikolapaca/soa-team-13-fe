@@ -1,0 +1,27 @@
+.blogs-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap; 
+  gap: 20px;
+  padding: 20px;
+}
+
+.blog-card {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 15px;
+  cursor: pointer;
+  transition: box-shadow 0.3s;
+  width: 80%;
+  flex-shrink: 0;
+}
+
+.blog-card:hover {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.blog-card img {
+  width: 50%;
+  height: auto;
+  border-radius: 8px;
+}
