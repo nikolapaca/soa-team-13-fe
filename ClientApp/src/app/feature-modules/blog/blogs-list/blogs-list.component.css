@@ -1,26 +1,23 @@
 .blogs-container {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 20px;
+  padding: 20px;
 }
 
 .blog-card {
-  display: flex;
-  flex-direction: column;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 15px;
   cursor: pointer;
-  transition: box-shadow 0.2s;
+  transition: box-shadow 0.3s;
 }
 
 .blog-card:hover {
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
-.blog-image {
-  width: 100%;
-  height: auto;
-  border-radius: 4px;
-  margin-bottom: 0.5rem;
+.blog-card img {
+  max-width: 100%;
+  border-radius: 8px;
 }

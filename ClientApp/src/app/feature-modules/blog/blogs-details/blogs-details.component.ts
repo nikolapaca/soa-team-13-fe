@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Blog } from '../../../models/blog.model';
-import { BlogService } from '../blog.servise';
-import { jwtDecode } from 'jwt-decode';
+import { BlogService } from '../blog.servise'
 
 
 @Component({
@@ -15,6 +14,7 @@ import { jwtDecode } from 'jwt-decode';
 })
 export class BlogsDetailsComponent implements OnInit {
   blog?: Blog;
+  isLiked: boolean = false;
 
   constructor(
     private blogService: BlogService,
@@ -35,29 +35,11 @@ export class BlogsDetailsComponent implements OnInit {
 
   toggleLike() {
     if (!this.blog) return;
-    const userId = this.getUserId();
-    if (!userId) {
-      alert("Morate biti ulogovani da biste lajkovali");
-      return;
-    }
+    this.isLiked = !this.isLiked;
 
-    this.blogService.likeBlog(this.blog._id, userId).subscribe({
+    this.blogService.likeBlog(this.blog._id).subscribe({
       next: () => this.loadBlog(this.blog!._id),
       error: (err) => console.error(err)
     });
-  }
-
-
-  getUserId(): string | null {
-    const token = localStorage.getItem('token');
-    if (!token) return null;
-
-    try {
-      const decoded: any = jwtDecode(token);
-      return decoded['id'];
-    } catch (error) {
-      console.error("Invalid token", error);
-      return null;
-    }
   }
 }

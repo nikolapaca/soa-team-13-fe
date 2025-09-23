@@ -6,6 +6,7 @@
         <button *ngIf="getToken() !== null && role !== 'admin'" (click)="profile()">Profile</button>
         <button *ngIf="getToken() !== null && role === 'guide'" (click)="myTours()">My tours</button>
         <button *ngIf="getToken() !== null && role === 'tourist'" (click)="publishedTours()">Tours</button>
+        <button *ngIf="getToken() !== null && role === 'tourist'" (click)="blogs()">Blogs</button>
         <button *ngIf="getToken() === null" (click)="login()">Login</button>
         <button *ngIf="getToken() !== null" (click)="logout()">Logout</button>
     </div>

@@ -4,7 +4,11 @@
   <p>{{ blog.content }}</p>
   <p>Objavljeno: {{ blog.created_at | date:'medium' }}</p>
   <p>Likes: {{ blog.likes?.length || 0 }}</p>
-  <button (click)="toggleLike()">Like/Unlike</button>
+  <button 
+  (click)="toggleLike()" 
+  [ngStyle]="{'color': isLiked ? 'red' : 'black'}">
+  ❤️ Like
+</button>
 </div>
 
 <div *ngIf="!blog">

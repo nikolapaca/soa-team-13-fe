@@ -23,5 +23,5 @@ export const routes: Routes = [
     {path: 'profile', component: ProfileComponent},
     {path: 'published-tours', component:PublishedToursComponent},
     {path: 'blogs', component:BlogsListComponent},
-    {path: 'blog/:id', component:BlogsDetailsComponent}
+    {path: 'blogs/:id', component:BlogsDetailsComponent}
 ];
