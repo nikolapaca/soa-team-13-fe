@@ -8,6 +8,7 @@ import { TourFormComponent } from './feature-modules/tour/tour-form/tour-form.co
 import { TourComponent } from './feature-modules/tour/tour/tour.component';
 import { ProfileComponent } from './profile/profile.component';
 import { PublishedToursComponent } from './feature-modules/tour/published-tours/published-tours.component';
+import { CartComponent } from './feature-modules/shopping-cart/cart/cart.component';
 
 export const routes: Routes = [
     {path: "login", component: LoginComponent},
@@ -19,5 +20,6 @@ export const routes: Routes = [
     {path: 'key-point/:tourId/:kpId/update', component: KeyPointFormComponent },
     {path: 'tour/:tourId', component: TourComponent},
     {path: 'profile', component: ProfileComponent},
-    {path: 'published-tours', component:PublishedToursComponent}
+    {path: 'published-tours', component: PublishedToursComponent},
+    {path: 'cart', component: CartComponent}
 ];

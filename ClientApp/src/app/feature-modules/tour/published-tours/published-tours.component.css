@@ -1,12 +1,12 @@
 .tour-list {
   display: flex;
-  flex-wrap: wrap; 
+  flex-wrap: wrap;
   gap: 1.5rem;
   padding: 1rem;
 }
 
 .tour-card {
-  flex: 0 0 calc(33% - 0.75rem); 
+  flex: 0 0 calc(33% - 0.75rem);
   box-sizing: border-box;
   border: 1px solid #ccc;
   padding: 1rem;
@@ -30,4 +30,33 @@
 
 .first-keypoint img {
   width: 40%;
+}
+
+.btn {
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 8px;
+  background: #4f46e5;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn:hover { background: #4338ca; }
+.btn:disabled { opacity: .7; cursor: default; }
+
+.btn.in-cart {
+  background: #6b7280;
+}
+.btn.in-cart:hover { background: #6b7280; }
+
+.badge {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 12px;
+}
+.badge.purchased {
+  background: #10b981;
+  color: #fff;
 }

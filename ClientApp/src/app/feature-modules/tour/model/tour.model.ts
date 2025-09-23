@@ -15,6 +15,9 @@ export interface Tour {
     image: string,
     keyPoints: KeyPoint[],
     reviews: TourReview[],
-    durations: TourDuration[]
+    durations: TourDuration[],
+
+    inCart?: boolean,
+    purchased?: boolean
 }
 

@@ -55,6 +55,9 @@ export class NavbarComponent {
   myTours(){
     this.router.navigate(["tours"]);
   }
+  cart(){
+    this.router.navigate(["cart"]);
+  }
 
   getToken(): string|null{
     return localStorage.getItem("token");

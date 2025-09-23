@@ -3,6 +3,7 @@
     <h2>{{ tour.name }}</h2>
     <img class="image" src="https://www.guide.com/img/meta_guide.png" alt="">
     <p><strong>Opis:</strong> {{ tour.description }}</p>
+    <p><strong>Duzina:</strong> {{ tour.length }}</p>
     <p><strong>Težina:</strong> {{ tour.difficulty }}</p>
     <p><strong>Tagovi:</strong> {{ tour.tags }}</p>
 
@@ -12,5 +13,13 @@
       <p><strong>Naziv:</strong> {{ tour.keyPoints[0].name }}</p>
       <p><strong>Opis:</strong> {{ tour.keyPoints[0].description }}</p>
     </div>
+
+    <button class="btn"
+            type="button"
+            [disabled]="tour.purchased || tour.inCart"
+            [ngClass]="{ 'in-cart': tour.inCart, 'purchased': tour.purchased }"
+            (click)="addToCart(tour)">
+      {{ tour.purchased ? 'Bought' : (tour.inCart ? 'In cart' : 'Add to cart') }}
+    </button>
   </div>
 </div>
