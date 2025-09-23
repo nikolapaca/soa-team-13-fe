@@ -2,7 +2,7 @@
 
 <div class="blogs-container">
   <div *ngFor="let blog of blogs" class="blog-card" [routerLink]="['/blogs', blog._id]">
-    <img *ngIf="blog.image_url" [src]="blog.image_url" alt="{{ blog.title }}" class="blog-image">
+    <img *ngIf="blog.image_url" [src]="'blog.jpg'" alt="{{ blog.title }}" class="blog-image">
     <h3>{{ blog.title }}</h3>
   </div>
 </div>

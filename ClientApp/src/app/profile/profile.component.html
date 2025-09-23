@@ -1,35 +1,54 @@
 <div class="profile-layout">
-  <!-- LEVO: slika -->
   <div class="profile-left">
     <div class="avatar-wrap">
-      <img
-        [src]="profile?.profilePicture"
-        alt="Profilna slika"
-      />
+      <img src="profilepic.jpg" alt="Profilna slika" />
+
     </div>
   </div>
 
-  <!-- DESNO: podaci -->
   <div class="profile-right">
     <div class="field">
       <label>Ime</label>
-      <p class="field-value">{{ profile?.name || '—' }}</p>
+      <ng-container *ngIf="!editing; else editNameTpl">
+        <p class="field-value">{{ profile?.name || '—' }}</p>
+      </ng-container>
+      <ng-template #editNameTpl>
+        <input [(ngModel)]="editName" />
+      </ng-template>
     </div>
 
     <div class="field">
       <label>Prezime</label>
-      <p class="field-value">{{ profile?.surname || '—' }}</p>
+      <ng-container *ngIf="!editing; else editSurnameTpl">
+        <p class="field-value">{{ profile?.surname || '—' }}</p>
+      </ng-container>
+      <ng-template #editSurnameTpl>
+        <input [(ngModel)]="editSurname" />
+      </ng-template>
     </div>
 
     <div class="field">
       <label>Moto</label>
-      <p class="field-value">{{ profile?.motto || '—' }}</p>
+      <ng-container *ngIf="!editing; else editMottoTpl">
+        <p class="field-value">{{ profile?.motto || '—' }}</p>
+      </ng-container>
+      <ng-template #editMottoTpl>
+        <input [(ngModel)]="editMotto" />
+      </ng-template>
     </div>
 
     <div class="field">
       <label>Bio</label>
-      <p class="field-value multiline">{{ profile?.bio || '—' }}</p>
+      <ng-container *ngIf="!editing; else editBioTpl">
+        <p class="field-value multiline">{{ profile?.bio || '—' }}</p>
+      </ng-container>
+      <ng-template #editBioTpl>
+        <textarea [(ngModel)]="editBio"></textarea>
+      </ng-template>
     </div>
+
+    <button (click)="toggleEdit()">
+      {{ editing ? 'Save' : 'Edit' }}
+    </button>
   </div>
 </div>
-

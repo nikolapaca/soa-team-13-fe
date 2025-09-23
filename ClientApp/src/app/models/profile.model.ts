@@ -1,8 +1,8 @@
 export interface Profile {
-  accountId:      string,
+  account_id:      string,
 	name:           string,
 	surname:        string,
-	profilePicture: string,
+	profile_picture: string,
 	bio:            string,
 	motto:          string
 }

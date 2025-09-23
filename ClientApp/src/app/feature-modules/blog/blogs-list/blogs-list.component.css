@@ -1,6 +1,7 @@
 .blogs-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap; 
   gap: 20px;
   padding: 20px;
 }
@@ -11,6 +12,8 @@
   padding: 15px;
   cursor: pointer;
   transition: box-shadow 0.3s;
+  width: 80%;
+  flex-shrink: 0;
 }
 
 .blog-card:hover {
@@ -18,6 +21,7 @@
 }
 
 .blog-card img {
-  max-width: 100%;
+  width: 50%;
+  height: auto;
   border-radius: 8px;
 }
