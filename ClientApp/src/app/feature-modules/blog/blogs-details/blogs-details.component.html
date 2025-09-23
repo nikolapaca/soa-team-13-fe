@@ -1,0 +1,12 @@
+<div *ngIf="blog" class="blog-detail">
+  <h2>{{ blog.title }}</h2>
+  <img *ngIf="blog.image_url" [src]="blog.image_url" alt="{{ blog.title }}" class="blog-image">
+  <p>{{ blog.content }}</p>
+  <p>Objavljeno: {{ blog.created_at | date:'medium' }}</p>
+  <p>Likes: {{ blog.likes?.length || 0 }}</p>
+  <button (click)="toggleLike()">Like/Unlike</button>
+</div>
+
+<div *ngIf="!blog">
+  <p>Učitavanje bloga...</p>
+</div>
