@@ -1,23 +1,22 @@
-import { Component, AfterViewInit, EventEmitter, Output, Input, SimpleChanges } from '@angular/core';
+import { Component, AfterViewInit, EventEmitter, Output, Input, SimpleChanges, OnDestroy } from '@angular/core';
 import * as L from 'leaflet';
 import { KeyPoint } from '../../feature-modules/tour/model/keyPoint.model';
 import 'leaflet-routing-machine';
 
-
-  const DEFAULT_POS: KeyPoint = {
-    name: 'Start',
-    description: '',
-    image: '',
-    latitude: 45.2396,
-    longitude: 19.8227
-  };
+const DEFAULT_POS: KeyPoint = {
+  name: 'Start',
+  description: '',
+  image: '',
+  latitude: 45.2396,
+  longitude: 19.8227
+};
 
 @Component({
   selector: 'app-map',
   templateUrl: './map-component.html',
   styleUrls: ['./map-component.css'],
 })
-export class MapComponent implements AfterViewInit {
+export class MapComponent implements AfterViewInit, OnDestroy {
 
   private map!: L.Map;
   private marker: L.Marker | undefined;
@@ -25,7 +24,11 @@ export class MapComponent implements AfterViewInit {
   private routing?: any;
   private _initialPosition: KeyPoint = DEFAULT_POS;
 
-  @Output() distanceAndTime = new EventEmitter<{distance: number, time: number}>();
+  // NEW: guard + debounce
+  private routingEventsAttached = false;
+  private waypointTimer: any;
+
+  @Output() distanceAndTime = new EventEmitter<{ distance: number, time: number }>();
   @Output() pointSelected = new EventEmitter<{ lat: number; lng: number }>();
   @Input() points: KeyPoint[] = [];
 
@@ -39,23 +42,30 @@ export class MapComponent implements AfterViewInit {
       else this.marker = L.marker(ll).addTo(this.map);
     }
   }
-  constructor() {}
+  constructor() { }
 
   ngAfterViewInit(): void {
     const defaultIcon = L.icon({
       iconUrl: 'https://unpkg.com/leaflet@1.6.0/dist/images/marker-icon.png',
       shadowUrl: 'https://unpkg.com/leaflet@1.6.0/dist/images/marker-shadow.png'
     });
-    L.Marker.prototype.options.icon = defaultIcon;
+    (L.Marker.prototype as any).options.icon = defaultIcon;
 
     this.initMap();
     this.drawRoute();
   }
 
-    ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     if (changes['points'] && this.map) {
-      console.log("Tacke: ", this.points);
+      console.log('Tacke: ', this.points);
       this.drawRoute();
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.routing) {
+      this.routing.off('routesfound', this.onRoutesFound);
+      this.routing.off('routingerror');
     }
   }
 
@@ -90,11 +100,13 @@ export class MapComponent implements AfterViewInit {
       this.marker = L.marker(initialCoords).addTo(this.map);
     }
 
-    //routing kontrola
-     this.routing = (L as any).Routing.control({
+    // routing kontrola
+    this.routing = (L as any).Routing.control({
       waypoints: [],
       router: (L as any).Routing.osrmv1({
         serviceUrl: 'https://router.project-osrm.org/route/v1',
+        // Ako želiš stabilniji community endpoint za hodanje:
+        // serviceUrl: 'https://routing.openstreetmap.de/routed-foot/route/v1',
         profile: 'foot'
       }),
       addWaypoints: false,
@@ -105,7 +117,8 @@ export class MapComponent implements AfterViewInit {
       createMarker: (_i: number, _wp: any) => null
     }).addTo(this.map);
 
-    this.calculateDistance();
+    // NEW: kači evente SAMO jednom
+    this.bindRoutingEventsOnce();
 
     this.registerOnClick();
   }
@@ -115,9 +128,7 @@ export class MapComponent implements AfterViewInit {
       const coord = e.latlng;
       const { lat, lng } = coord;
 
-      console.log(
-        'Kliknuli ste na mapu na geografskoj širini: ' + lat + ' i dužini: ' + lng
-      );
+      console.log('Kliknuli ste na mapu na geografskoj širini: ' + lat + ' i dužini: ' + lng);
 
       this.pointSelected.emit({ lat, lng });
 
@@ -143,27 +154,55 @@ export class MapComponent implements AfterViewInit {
         .addTo(this.routeLayer!);
     });
 
-    // prosledi ruting mašini (ovo “snapuje” na puteve)
+    // prosledi ruting mašini (snap na puteve)
     const wps = (this.points || []).map(p => L.latLng(+p.latitude, +p.longitude));
     if (wps.length >= 2) {
-      this.routing.setWaypoints(wps);
-      this.calculateDistance();
+      // NEW: debounce setWaypoints – ne zatrpavaj backend
+      this.setWaypointsDebounced(wps);
     } else {
       this.routing.setWaypoints([]); // nema rute
       if (wps.length === 1) this.map.setView(wps[0], 15);
     }
   }
 
-  private calculateDistance(){
-    this.routing.on('routesfound', (event: any) => {
-      const route = event.routes[0];
-      
-      const distance = route.summary.totalDistance / 1000; // u kilometrima
-      const time = route.summary.totalTime / 60; // u minutima
-      console.log(`Dužina: ${distance.toFixed(2)} km`);
-      console.log(`Vreme: ${time.toFixed(2)} minuta`);
-      this.distanceAndTime.emit({ distance, time });
-      
-  });
+  // NEW: handler izdvojen, koristi se u on/off
+  private onRoutesFound = (event: any) => {
+    const route = event.routes?.[0];
+    if (!route) {
+      console.warn('[Routing] routesfound bez rute');
+      return;
+    }
+    const distance = route.summary.totalDistance / 1000; // km
+    const time = route.summary.totalTime / 60; // min
+    console.log(`Dužina: ${distance.toFixed(2)} km`);
+    console.log(`Vreme: ${time.toFixed(2)} minuta`);
+    this.distanceAndTime.emit({ distance, time });
+
+    // (opciono) fit na rutu:
+    const line = route.coordinates as L.LatLng[];
+    if (line?.length) this.map?.fitBounds(L.latLngBounds(line), { padding: [20, 20] });
+  };
+
+  private bindRoutingEventsOnce() {
+    if (!this.routing || this.routingEventsAttached) return;
+    this.routingEventsAttached = true;
+
+    this.routing.on('routesfound', this.onRoutesFound);
+    this.routing.on('routingstart', () => console.log('[Routing] start…'));
+    this.routing.on('routingerror', (e: any) => {
+      console.error('[Routing] GREŠKA', e);
+      // fallback: iscrtaj lomljenu liniju da korisnik bar nešto vidi
+      try {
+        const wps = (this.points || []).map(p => L.latLng(+p.latitude, +p.longitude));
+        if (wps.length >= 2 && this.routeLayer) {
+          L.polyline(wps, { dashArray: '6,6' }).addTo(this.routeLayer);
+        }
+      } catch { /* noop */ }
+    });
+  }
+
+  private setWaypointsDebounced(wps: L.LatLng[]) {
+    clearTimeout(this.waypointTimer);
+    this.waypointTimer = setTimeout(() => this.routing!.setWaypoints(wps), 350);
   }
 }

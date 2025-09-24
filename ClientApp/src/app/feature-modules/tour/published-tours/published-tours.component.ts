@@ -6,6 +6,7 @@ import { CartService } from '../../shopping-cart/cart.service';
 import { OrderItem } from '../../shopping-cart/model/orderItem.model';
 import { TourPurchaseToken } from '../../shopping-cart/model/tourPurchaseToken.model';
 import { ShoppingCart } from '../../shopping-cart/model/shoppingCart.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-published-tours',
@@ -22,7 +23,7 @@ export class PublishedToursComponent implements OnInit{
     items: []
   };
 
-  constructor(private service: TourService, private cartService: CartService){}
+  constructor(private service: TourService, private cartService: CartService, private router: Router){}
 
   ngOnInit(){
     this.service.getPublished().subscribe({
@@ -86,5 +87,9 @@ export class PublishedToursComponent implements OnInit{
       }
     })
 
+  }
+
+  onCardClick(tourId: number): void{
+    this.router.navigate(['/tour', tourId]);
   }
 }

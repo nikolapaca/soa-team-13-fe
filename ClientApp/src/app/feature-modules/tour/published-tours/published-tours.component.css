@@ -16,6 +16,28 @@
 
 .image {
   width: 100%;
+  height: 180px;        /* izaberi visinu koja ti paše: 160–240px */
+  object-fit: cover;    /* popuni okvir i iseci višak */
+  object-position: center;
+  display: block;
+  border-radius: 8px;
+}
+
+.kp-thumb {
+  width: 70%;
+  margin: auto;
+  aspect-ratio: 4 / 3;   /* probaj 4/3 ili 16/9; sve iste visine */
+  border-radius: 8px;
+  overflow: hidden;
+  background: #eee;      /* fallback dok se ne učita */
+}
+
+.kp-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;      /* popuni i iseci višak */
+  object-position: 50% 35%; /* malo bias ka vrhu; promeni po ukusu */
+  display: block;
 }
 
 .tour-card h2 {
@@ -26,10 +48,6 @@
   margin-top: 1rem;
   padding-top: 0.5rem;
   border-top: 1px dashed #aaa;
-}
-
-.first-keypoint img {
-  width: 40%;
 }
 
 .btn {
@@ -59,4 +77,15 @@
 .badge.purchased {
   background: #10b981;
   color: #fff;
+}
+
+.btn.view {
+  background-color: #22c55e;   /* zelena */
+  color: #fff;
+  border: 1px solid #16a34a;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color .15s ease, transform .05s ease;
 }
