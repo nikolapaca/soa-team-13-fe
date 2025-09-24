@@ -25,7 +25,6 @@ export class ProfileComponent {
       if (this.token) {
         try {
           this.decodedToken = jwtDecode(this.token);
-          console.log("DECODED TOKEN: ", this.decodedToken);
         } catch (error) {
         }
       }
@@ -33,6 +32,7 @@ export class ProfileComponent {
       this.http.get<Profile>("http://localhost:8070/accounts/profiles/" + this.decodedToken.sub, {headers: {'Authorization': `Bearer ${this.token}`}}).subscribe({
           next: (res) => {
             this.profile = res;
+            console.log("PROFIL: ", res);
           }
         })
   }
