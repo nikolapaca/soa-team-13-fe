@@ -1,0 +1,70 @@
+.tour-execution-container {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  height: 100%;
+}
+
+.map {
+  flex: 1;
+  border: 1px solid #ccc;
+  min-height: 400px;
+}
+
+.info {
+  flex: 1;
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li.completed {
+  color: green;
+}
+
+li.pending {
+  color: orange;
+}
+
+.actions {
+  margin-top: 20px;
+}
+
+.actions button {
+  margin-right: 10px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+.map-container {
+  width: 60%;
+  height: 100%;
+  display: block;
+}
+
+.kp-layout {
+  display: flex;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.kp-map {
+  flex: 2 1 0;
+  display: flex;
+  min-height: 420px;
+  height: 100%;
+}
+
+.kp-map app-map {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

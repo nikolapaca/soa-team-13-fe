@@ -1,0 +1,36 @@
+<div class="tour-execution-container" *ngIf="execution">
+  <div class="map">
+    <p>Map (position simulator)</p>
+    <div class="kp-map">
+        <app-map
+        (pointSelected)="onCoords($event)"
+        ></app-map>
+    </div>
+  </div>
+
+  <div class="info">
+    <h2>Tour #{{ execution.tourId }}</h2>
+    <p><strong>Tour range:</strong> {{ execution.tourRange }} km</p>
+    <p><strong>Start time:</strong> {{ execution.startTime | date:'short' }}</p>
+    <p><strong>Last activity:</strong> {{ execution.lastActivity | date:'short' }}</p>
+
+    <h3>Key points</h3>
+    <div *ngIf="execution">
+      <div *ngFor="let kp of completedPoints">
+        {{ kp.id }} - completed
+      </div>
+
+      <div *ngFor="let kp of pendingPoints">
+        {{ kp.id }} - pending
+      </div>
+    </div>
+
+
+    <p><strong>Completion percentage:</strong> {{ completionPercentage }}%</p>
+
+    <div class="actions">
+      <button (click)="complete()">Complete</button>
+      <button (click)="abandon()">Abandon</button>
+    </div>
+  </div>
+</div>

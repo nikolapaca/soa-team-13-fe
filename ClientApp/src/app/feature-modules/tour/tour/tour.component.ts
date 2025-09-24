@@ -7,6 +7,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TourService } from '../tour.service';
 import { KeyPointCardComponent } from '../key-point-card/key-point-card.component';
 import { TourReview } from '../model/tourReview.model';
+import { jwtDecode } from 'jwt-decode';
+import { TourExecutionService } from '../../tour-execution/tour-execution.service';
+import { TourExecution } from '../../../models/tour-execution.model';
 
 @Component({
   selector: 'app-tour',
@@ -20,7 +23,8 @@ export class TourComponent {
   tourId: number = 1;
   token: any;
 
-  constructor(private router: Router, private route: ActivatedRoute, private service: TourService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private service: TourService, 
+              private exeService: TourExecutionService) { }
 
   ngOnInit(): void{
   this.tourId = Number(this.route.snapshot.paramMap.get('tourId'));
@@ -143,5 +147,24 @@ export class TourComponent {
         this.tour = result;
       }
     })
+  }
+
+    startTour(): void {
+    this.token = localStorage.getItem("token") ? localStorage.getItem("token") : '';
+    var decodedToken = jwtDecode(this.token);
+    var userId = decodedToken['sub']!
+
+    const dto = {
+      tourId: this.tourId,
+      userId: userId
+    };
+    this.exeService.create(dto).subscribe({
+      next: (execution: TourExecution) => {
+        this.router.navigate(['/tour-execution', execution.id]);
+      },
+      error: (err) => {
+        console.error('Error starting tour:', err);
+      }
+    });
   }
 }

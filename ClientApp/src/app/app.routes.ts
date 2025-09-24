@@ -10,6 +10,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { PublishedToursComponent } from './feature-modules/tour/published-tours/published-tours.component';
 import { BlogsListComponent } from './feature-modules/blog/blogs-list/blogs-list.component';
 import { BlogsDetailsComponent } from './feature-modules/blog/blogs-details/blogs-details.component';
+import { TourExecutionComponent } from './feature-modules/tour-execution/tour-execution/tour-execution';
 
 export const routes: Routes = [
     {path: "login", component: LoginComponent},
@@ -23,5 +24,6 @@ export const routes: Routes = [
     {path: 'profile', component: ProfileComponent},
     {path: 'published-tours', component:PublishedToursComponent},
     {path: 'blogs', component:BlogsListComponent},
-    {path: 'blogs/:id', component:BlogsDetailsComponent}
+    {path: 'blogs/:id', component:BlogsDetailsComponent},
+    {path: 'tour-execution/:id', component:TourExecutionComponent}
 ];

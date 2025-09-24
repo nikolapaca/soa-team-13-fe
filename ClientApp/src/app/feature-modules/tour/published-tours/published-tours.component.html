@@ -1,5 +1,5 @@
 <div class="tour-list">
-  <div class="tour-card" *ngFor="let tour of tours">
+  <div class="tour-card" *ngFor="let tour of tours" (click)="onCardClick(tour.id)">
     <h2>{{ tour.name }}</h2>
     <img class="image" src="https://www.guide.com/img/meta_guide.png" alt="">
     <p><strong>Opis:</strong> {{ tour.description }}</p>
