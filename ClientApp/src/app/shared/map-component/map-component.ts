@@ -157,13 +157,13 @@ export class MapComponent implements AfterViewInit {
   private calculateDistance(){
     this.routing.on('routesfound', (event: any) => {
       const route = event.routes[0];
-      
+
       const distance = route.summary.totalDistance / 1000; // u kilometrima
       const time = route.summary.totalTime / 60; // u minutima
       console.log(`Dužina: ${distance.toFixed(2)} km`);
       console.log(`Vreme: ${time.toFixed(2)} minuta`);
       this.distanceAndTime.emit({ distance, time });
-      
+
   });
   }
 }

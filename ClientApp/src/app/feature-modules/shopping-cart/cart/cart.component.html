@@ -1,0 +1,45 @@
+<div class="cart-page">
+  <section class="cart-items">
+    <header class="cart-header">
+      <h2>Shopping Cart</h2>
+      <span class="count" *ngIf="shoppingCart.items.length">{{ shoppingCart.items.length }} item<span *ngIf="shoppingCart.items.length !== 1">s</span></span>
+    </header>
+
+    <ng-container *ngIf="shoppingCart.items.length; else empty">
+      <article class="item-card" *ngFor="let it of shoppingCart.items; trackBy: trackById">
+        <img
+          src="assets/map_pin_image.png"
+          width="96" height="96"
+          alt="Tour image" class="thumb" />
+
+        <div class="info">
+          <h3 class="title">{{ it.name }}</h3>
+          <div class="price">{{ it.price | currency:'RSD':'symbol-narrow':'1.0-0' }}</div>
+        </div>
+
+        <button class="remove" type="button" (click)="remove(it)">Remove</button>
+
+      </article>
+    </ng-container>
+
+    <ng-template #empty>
+      <div class="empty">Korpa je prazna.</div>
+    </ng-template>
+  </section>
+
+  <aside class="summary">
+    <h2>Order Summary</h2>
+    <div class="row">
+      <span>Items</span>
+      <span>{{ shoppingCart.items.length }}</span>
+    </div>
+    <hr />
+    <div class="row total">
+      <span>Total</span>
+      <span class="total-amount">{{ total | currency:'RSD':'symbol-narrow':'1.0-0' }}</span>
+    </div>
+    <button class="checkout" type="button" [disabled]="!shoppingCart.items.length" (click)="checkout()">
+      Checkout
+    </button>
+  </aside>
+</div>
