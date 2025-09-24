@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Account } from '../models/account.model';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-all-accounts',
@@ -46,4 +47,39 @@ export class AllAccountsComponent implements OnInit{
       }
     })
   }
+
+
+
+followUser(userId: string, button: HTMLButtonElement): void {
+  const token = localStorage.getItem("token") || '';
+  if (!token) {
+    console.error("Nema tokena u localStorage-u");
+    return;
+  }
+
+  const decodedToken: any = jwtDecode(token);
+  const accountId = decodedToken['sub'];
+
+  button.disabled = true;
+
+  this.http.post(
+    `http://localhost:8070/follow/${accountId}/${userId}`,
+    null,
+    {
+      headers: { 'Authorization': `Bearer ${token}` },
+      responseType: 'text' as const,
+    }
+  ).subscribe({
+    next: (_msg) => {
+      console.log(`Uspešno zapracen user ${userId}`);
+    },
+    error: (err) => {
+      console.error("Greska prilikom zapracivanja:", err);
+      button.disabled = false;
+    }
+  });
+}
+
+
+
 }

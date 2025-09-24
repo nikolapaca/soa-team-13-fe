@@ -1,7 +1,7 @@
 <div class="navbar">
     <h1>Tourism</h1>
     <div class="button-container">
-        <button *ngIf="getToken() !== null && role === 'admin'" (click)="allAccounts()">All accounts</button>
+        <button *ngIf="getToken() !== null" (click)="allAccounts()">All accounts</button>
         <button *ngIf="getToken() !== null && role !== 'admin'" (click)="map()">Map</button>
         <button *ngIf="getToken() !== null && role !== 'admin'" (click)="profile()">Profile</button>
         <button *ngIf="getToken() !== null && role === 'guide'" (click)="myTours()">My tours</button>

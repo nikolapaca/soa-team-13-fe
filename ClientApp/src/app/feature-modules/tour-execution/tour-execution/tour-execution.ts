@@ -65,9 +65,13 @@ export class TourExecutionComponent implements OnInit {
 
   complete() {
     this.tourExecutionService.complete(this.execution.userId)
-      .subscribe(updated => this.execution = updated);
-      alert("you completed tour execution");
-      this.router.navigate(['/published-tours']);
+      .subscribe({
+          next: updated => {
+            this.execution = updated;
+            this.showReviewModal = true; 
+          },
+          error: err => console.error(err)
+        });
   }
 
     abandon() {
@@ -75,7 +79,7 @@ export class TourExecutionComponent implements OnInit {
         .subscribe({
           next: updated => {
             this.execution = updated;
-            this.showReviewModal = true; // tek sada je safe prikazati modal
+            this.showReviewModal = true;
           },
           error: err => console.error(err)
         });
@@ -107,7 +111,7 @@ export class TourExecutionComponent implements OnInit {
       touristId: this.execution.userId,
       rating: Number(this.reviewRating),
       comment: this.reviewComment,
-      tourDate: formatDate(new Date(this.execution.startTime)), // startTime iz TourExecution
+      tourDate: formatDate(new Date(this.execution.startTime)), 
       creationDate: formatDate(new Date()) 
     };
 
@@ -116,10 +120,11 @@ export class TourExecutionComponent implements OnInit {
       .subscribe({
         next: () => {
           this.showReviewModal = false;
-          this.router.navigate(['/published-tours']);
         },
         error: err => console.error('Error submitting review', err)
       });
+      this.router.navigate(['/published-tours']);
+
   }
 
 }

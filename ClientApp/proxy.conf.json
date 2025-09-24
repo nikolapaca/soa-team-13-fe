@@ -16,5 +16,19 @@
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"
+  },
+  
+  "/follow": {
+    "target": "http://localhost:8082",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/tourReview": {
+    "target": "http://localhost:8084",
+    "secure": false,
+    "changeOrigin": true
   }
+
+
 }

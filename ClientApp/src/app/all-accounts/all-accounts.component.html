@@ -25,6 +25,11 @@
                   (click)="blockUser(a.id)">
                   {{a.blocked ? 'Blocked' : 'Block'}}
           </button>
+
+          <button #followBtn (click)="followUser(a.id, followBtn)">
+            Follow
+          </button>
+
         </td>
       </tr>
     </tbody>

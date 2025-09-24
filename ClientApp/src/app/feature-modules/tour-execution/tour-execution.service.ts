@@ -40,7 +40,7 @@ export class TourExecutionService {
       ...reviewData
     };
 
-    return this.http.post('http://localhost:8084/tourReview', body, {
+    return this.http.post('/tourReview', body, {
       headers: { 'Content-Type': 'application/json' }
     });
   }
