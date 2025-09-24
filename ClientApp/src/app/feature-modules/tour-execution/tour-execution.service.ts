@@ -34,4 +34,16 @@ export class TourExecutionService {
   abandon(userId: string): Observable<TourExecution> {
     return this.http.put<TourExecution>(`${this.apiUrl}/abandon/${userId}`, {});
   }
+
+  createReview(reviewData: any): Observable<any> {
+    const body = {
+      ...reviewData
+    };
+
+    return this.http.post('http://localhost:8084/tourReview', body, {
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+
+
 }

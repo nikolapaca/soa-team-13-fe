@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Tour } from './model/tour.model';
 import { KeyPoint } from './model/keyPoint.model';
 import { jwtDecode } from 'jwt-decode';
+import { TourReview } from './model/tourReview.model';
 
 @Injectable({
   providedIn: 'root'
@@ -63,5 +64,9 @@ export class TourService{
     var accountId = decodedToken['sub']!
     tour.authorId = accountId;
     return this.http.post<Tour>('http://localhost:8070/tours/', tour, {headers: {'Authorization': `Bearer ${this.token}`}});
+  }
+
+  getReviewsByTourId(tourId: number): Observable<TourReview[]> {
+    return this.http.get<TourReview[]>(`http://localhost:8084/tourReview/tour/${tourId}`);
   }
 }

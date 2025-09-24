@@ -34,3 +34,19 @@
     </div>
   </div>
 </div>
+
+<div *ngIf="showReviewModal" class="modal-backdrop">
+  <div class="modal">
+    <h3>Rate this tour</h3>
+    <label>Rating:</label>
+    <select [(ngModel)]="reviewRating" name="rating">
+      <option *ngFor="let r of [1,2,3,4,5]" [value]="r">{{r}}</option>
+    </select>
+
+    <label>Comment:</label>
+    <textarea [(ngModel)]="reviewComment" name="comment"></textarea>
+
+    <button (click)="submitReview()">Submit</button>
+    <button (click)="showReviewModal = false">Cancel</button>
+  </div>
+</div>

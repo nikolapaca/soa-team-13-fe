@@ -86,3 +86,17 @@
 
 
 <button (click)="startTour()">Start tour</button>
+
+<h3>Recenzije</h3>
+
+<div *ngIf="reviews.length === 0">
+  Nema recenzija za ovu turu.
+</div>
+
+<div class="review-cards" *ngIf="reviews.length > 0">
+  <div class="review-card" *ngFor="let review of reviews">
+    <p><strong>Rating:</strong> {{ review.rating }}/5</p>
+    <p><strong>Comment:</strong> {{ review.comment }}</p>
+    <p><small>Created: {{ review.creationDate | date:'medium' }}</small></p>
+  </div>
+</div>

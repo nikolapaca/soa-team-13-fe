@@ -22,6 +22,7 @@ export class TourComponent {
   tour?: Tour;
   tourId: number = 1;
   token: any;
+  reviews: TourReview[] = [];
 
   constructor(private router: Router, private route: ActivatedRoute, private service: TourService, 
               private exeService: TourExecutionService) { }
@@ -33,6 +34,9 @@ export class TourComponent {
       next : (result) =>{
           this.tour = result;
           console.log("DOBAVIO SAM TURU: ", result);
+
+          this.loadReviews();
+
       }
     })
   }
@@ -164,6 +168,18 @@ export class TourComponent {
       },
       error: (err) => {
         console.error('Error starting tour:', err);
+      }
+    });
+  }
+
+  loadReviews(): void {
+    this.service.getReviewsByTourId(this.tourId).subscribe({
+      next: (res: TourReview[]) => {
+        this.reviews = res;
+      },
+      error: (err) => {
+        console.error('Error loading reviews:', err);
+        this.reviews = [];
       }
     });
   }

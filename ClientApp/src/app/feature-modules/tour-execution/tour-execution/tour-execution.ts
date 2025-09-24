@@ -3,18 +3,25 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TourExecution } from '../../../models/tour-execution.model';
 import { TourExecutionService } from '../tour-execution.service';
 import { KeyPointsStatus } from '../../../models/keypoint-status.model';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule, DatePipe, formatDate } from '@angular/common';
 import { MapComponent } from '../../../shared/map-component/map-component';
+import { FormsModule } from '@angular/forms';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-tour-execution',
   templateUrl: './tour-execution.html',
   styleUrls: ['./tour-execution.css'],
-  imports: [CommonModule, DatePipe, MapComponent]
+  imports: [CommonModule, DatePipe, MapComponent, FormsModule]
 })
 export class TourExecutionComponent implements OnInit {
   execution!: TourExecution;
   completionPercentage: number = 0;
+
+  showReviewModal: boolean = false;
+  reviewRating: number = 5;
+  reviewComment: string = '';
+
 
   constructor(
     private route: ActivatedRoute,
@@ -63,13 +70,16 @@ export class TourExecutionComponent implements OnInit {
       this.router.navigate(['/published-tours']);
   }
 
-  abandon() {
-    this.tourExecutionService.abandon(this.execution.userId)
-      .subscribe(updated => this.execution = updated);
-      alert("you abandoned tour execution");
-      this.router.navigate(['/published-tours']);
-
-  }
+    abandon() {
+      this.tourExecutionService.abandon(this.execution.userId)
+        .subscribe({
+          next: updated => {
+            this.execution = updated;
+            this.showReviewModal = true; // tek sada je safe prikazati modal
+          },
+          error: err => console.error(err)
+        });
+    }
 
   get completedPoints(): KeyPointsStatus[] {
     return this.execution?.keypointsStatus?.filter(
@@ -85,5 +95,31 @@ export class TourExecutionComponent implements OnInit {
 
   
   onCoords(p: { lat: number; lng: number }) {}
+
+  submitReview() {
+    const formatDate = (date: Date) => {
+      const pad = (n: number) => n.toString().padStart(2, '0');
+      return `${date.getFullYear()}-${pad(date.getMonth()+1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+    }
+
+    const review = {
+      tourId: Number(this.execution.tourId),
+      touristId: this.execution.userId,
+      rating: Number(this.reviewRating),
+      comment: this.reviewComment,
+      tourDate: formatDate(new Date(this.execution.startTime)), // startTime iz TourExecution
+      creationDate: formatDate(new Date()) 
+    };
+
+    console.log("review: ", review);
+    this.tourExecutionService.createReview(review)
+      .subscribe({
+        next: () => {
+          this.showReviewModal = false;
+          this.router.navigate(['/published-tours']);
+        },
+        error: err => console.error('Error submitting review', err)
+      });
+  }
 
 }
