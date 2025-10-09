@@ -1,7 +1,29 @@
-.blogs-container {
+.header-container {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap; 
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px; 
+  margin-bottom: 20px;
+}
+
+.add-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.add-button:hover {
+  background-color: #0056b3;
+}
+
+.blogs-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
   gap: 20px;
   padding: 20px;
 }
@@ -12,8 +34,6 @@
   padding: 15px;
   cursor: pointer;
   transition: box-shadow 0.3s;
-  width: 80%;
-  flex-shrink: 0;
 }
 
 .blog-card:hover {
@@ -21,7 +41,8 @@
 }
 
 .blog-card img {
-  width: 50%;
+  width: 100%;
   height: auto;
   border-radius: 8px;
+  margin-bottom: 10px;
 }

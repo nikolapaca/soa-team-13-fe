@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
 import { Blog } from '../../models/blog.model';
 import { jwtDecode } from 'jwt-decode';
 
@@ -8,7 +8,7 @@ import { jwtDecode } from 'jwt-decode';
   providedIn: 'root'
 })
 export class BlogService {
-  private apiUrl = '/blogs';
+  private apiUrl = 'http://localhost:8070/blogs/';
 
   token: any;
   constructor(private http: HttpClient) {
@@ -23,6 +23,18 @@ export class BlogService {
     return this.http.get<Blog>(`${this.apiUrl}/${id}`);
   }
 
+  createBlog(blogData: FormData): Observable<any> {
+    if (!this.token) {
+        return throwError(() => ({ status: 401, message: 'Niste ulogovani.' }));
+    }
+    
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+
+    return this.http.post(this.apiUrl, blogData, { headers: headers }); 
+  }
+
   likeBlog(blogId: string): Observable<string> {
         var decodedToken = jwtDecode(this.token);
         var accountId = decodedToken['sub']!
@@ -35,4 +47,21 @@ export class BlogService {
       { headers: { 'Content-Type': 'application/json' }, responseType: 'text' }
     );
   }
+
+  addComment(blogId: string, text: string): Observable<any> {
+    if (!this.token) {
+        return throwError(() => ({ status: 401, message: 'Niste ulogovani.' }));
+    }
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`,
+      'Content-Type': 'application/json'
+    });
+
+    const commentData = {
+      content: text,
+    };
+    
+    return this.http.post(`${this.apiUrl}${blogId}/comments`, commentData, { headers });
+}
 }
