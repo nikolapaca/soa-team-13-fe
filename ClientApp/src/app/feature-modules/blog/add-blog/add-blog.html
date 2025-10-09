@@ -1,0 +1,34 @@
+<div class="add-blog-container">
+  <h2>Dodaj Novi Blog</h2>
+
+  <form [formGroup]="blogForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label for="title">Naziv Bloga (Obavezno):</label>
+      <input type="text" id="title" formControlName="title" required>
+      <div *ngIf="blogForm.get('title')?.invalid && (blogForm.get('title')?.dirty || blogForm.get('title')?.touched)" 
+           class="error-message">
+        Naziv bloga je obavezan.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="content">Opis/Sadržaj (Obavezno):</label>
+      <textarea id="content" formControlName="content" rows="6" required></textarea>
+      <div *ngIf="blogForm.get('content')?.invalid && (blogForm.get('content')?.dirty || blogForm.get('content')?.touched)" 
+           class="error-message">
+        Sadržaj bloga je obavezan.
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="imageFile">Odaberi Sliku (Opciono):</label>
+      <input type="file" id="imageFile" (change)="onFileSelected($event)" accept="image/*">
+    </div>
+    <div class="form-actions">
+      <button type="submit" [disabled]="blogForm.invalid" class="submit-button">Kreiraj Blog</button>
+      <button type="button" [routerLink]="['/blogs']" class="back-button">Odustani</button>
+    </div>
+
+  </form>
+</div>

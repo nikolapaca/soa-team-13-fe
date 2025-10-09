@@ -1,12 +1,12 @@
 .tour-list {
   display: flex;
-  flex-wrap: wrap; 
+  flex-wrap: wrap;
   gap: 1.5rem;
   padding: 1rem;
 }
 
 .tour-card {
-  flex: 0 0 calc(33% - 0.75rem); 
+  flex: 0 0 calc(33% - 0.75rem);
   box-sizing: border-box;
   border: 1px solid #ccc;
   padding: 1rem;
@@ -16,6 +16,28 @@
 
 .image {
   width: 100%;
+  height: 180px;        /* izaberi visinu koja ti paše: 160–240px */
+  object-fit: cover;    /* popuni okvir i iseci višak */
+  object-position: center;
+  display: block;
+  border-radius: 8px;
+}
+
+.kp-thumb {
+  width: 70%;
+  margin: auto;
+  aspect-ratio: 4 / 3;   /* probaj 4/3 ili 16/9; sve iste visine */
+  border-radius: 8px;
+  overflow: hidden;
+  background: #eee;      /* fallback dok se ne učita */
+}
+
+.kp-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;      /* popuni i iseci višak */
+  object-position: 50% 35%; /* malo bias ka vrhu; promeni po ukusu */
+  display: block;
 }
 
 .tour-card h2 {
@@ -28,6 +50,42 @@
   border-top: 1px dashed #aaa;
 }
 
-.first-keypoint img {
-  width: 40%;
+.btn {
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 8px;
+  background: #4f46e5;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn:hover { background: #4338ca; }
+.btn:disabled { opacity: .7; cursor: default; }
+
+.btn.in-cart {
+  background: #6b7280;
+}
+.btn.in-cart:hover { background: #6b7280; }
+
+.badge {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 12px;
+}
+.badge.purchased {
+  background: #10b981;
+  color: #fff;
+}
+
+.btn.view {
+  background-color: #22c55e;   /* zelena */
+  color: #fff;
+  border: 1px solid #16a34a;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color .15s ease, transform .05s ease;
 }

@@ -37,6 +37,13 @@ export class ProfileComponent {
       }
     }
     this.loadProfile();
+
+    this.http.get<Profile>("http://localhost:8070/accounts/profiles/" + this.decodedToken.sub, {headers: {'Authorization': `Bearer ${this.token}`}}).subscribe({
+        next: (res) => {
+          this.profile = res;
+          console.log("PROFIL: ", res);
+        }
+      })
   }
 
   loadProfile() {
@@ -70,7 +77,7 @@ export class ProfileComponent {
     };
 
     this.http.put<Profile>(`/accounts/profiles/`, profileDto, {
-      headers: { 
+      headers: {
         'Authorization': `Bearer ${this.token}`,
         'Content-Type': 'application/json'
       }

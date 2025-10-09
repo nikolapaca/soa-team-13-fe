@@ -10,6 +10,9 @@ import { ProfileComponent } from './profile/profile.component';
 import { PublishedToursComponent } from './feature-modules/tour/published-tours/published-tours.component';
 import { BlogsListComponent } from './feature-modules/blog/blogs-list/blogs-list.component';
 import { BlogsDetailsComponent } from './feature-modules/blog/blogs-details/blogs-details.component';
+import { CartComponent } from './feature-modules/shopping-cart/cart/cart.component';
+import { AddBlog } from './feature-modules/blog/add-blog/add-blog';
+import { MarkdownModule } from 'ngx-markdown';
 import { TourExecutionComponent } from './feature-modules/tour-execution/tour-execution/tour-execution';
 
 export const routes: Routes = [
@@ -24,6 +27,12 @@ export const routes: Routes = [
     {path: 'profile', component: ProfileComponent},
     {path: 'published-tours', component:PublishedToursComponent},
     {path: 'blogs', component:BlogsListComponent},
-    {path: 'blogs/:id', component:BlogsDetailsComponent},
+    {path: 'add-blog', component: AddBlog},
+    {path: 'blogs/:id', component:BlogsDetailsComponent, providers: [
+            MarkdownModule
+        ]},
+    {path: 'published-tours', component: PublishedToursComponent},
+    {path: 'cart', component: CartComponent},
+  //  {path: 'blogs/:id', component:BlogsDetailsComponent},
     {path: 'tour-execution/:id', component:TourExecutionComponent}
 ];

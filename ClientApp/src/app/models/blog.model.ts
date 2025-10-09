@@ -1,3 +1,5 @@
+import { Comment } from "./comment.model";
+
 export interface Blog {
   _id: string;
   title: string;
@@ -5,4 +7,5 @@ export interface Blog {
   created_at: string;
   image_url?: string;
   likes?: string[];
+  comments: Comment[];
 }
