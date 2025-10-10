@@ -1,6 +1,6 @@
 <div *ngIf="blog" class="blog-detail">
     <h2>{{ blog.title }}</h2>
-    <img *ngIf="blog.image_url" [src]="'http://localhost:8070' + blog.image_url" alt="{{ blog.title }}" class="blog-image">
+    <img *ngIf="blog.image_url" [src]="'http://localhost:8070/upload' + blog.image_url" alt="{{ blog.title }}" class="blog-image">
     <markdown>{{ blog.content }}</markdown>
     <p>Objavljeno: {{ blog.created_at | date:'medium' }}</p>
     <p>Likes: {{ blog.likes?.length || 0 }}</p>
@@ -26,7 +26,7 @@
 
     <hr>
     
-    <h3>Komentari ({{ blog.comments?.length || 0 }})</h3>
+    <h3>Komentari ({{ blog.comments.length || 0 }})</h3>
 
     <div *ngIf="blog.comments && blog.comments.length > 0; else noComments" class="comments-list">
         <div *ngFor="let comment of blog.comments" class="comment-item">

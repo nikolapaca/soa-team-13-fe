@@ -8,9 +8,12 @@ import { jwtDecode } from 'jwt-decode';
   providedIn: 'root'
 })
 export class BlogService {
-  private apiUrl = 'http://localhost:8070/blogs/';
+  
+  private apiUrl = 'http://localhost:8070/blogs/'; 
+  private grpcApiUrl = 'http://localhost:8071/v1/blogs'; 
 
   token: any;
+  
   constructor(private http: HttpClient) {
     this.token = localStorage.getItem("token") ? localStorage.getItem("token") : '';
   }
@@ -20,19 +23,20 @@ export class BlogService {
   }
 
   getBlogById(id: string): Observable<Blog> {
-    return this.http.get<Blog>(`${this.apiUrl}/${id}`);
+    return this.http.get<Blog>(`${this.grpcApiUrl}/${id}`);
   }
 
-  createBlog(blogData: FormData): Observable<any> {
+  createBlog(blogData: any): Observable<any> { 
     if (!this.token) {
         return throwError(() => ({ status: 401, message: 'Niste ulogovani.' }));
     }
     
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.token}`
+      'Authorization': `Bearer ${this.token}`,
+      'Content-Type': 'application/json' 
     });
 
-    return this.http.post(this.apiUrl, blogData, { headers: headers }); 
+    return this.http.post(this.grpcApiUrl, blogData, { headers: headers }); 
   }
 
   likeBlog(blogId: string): Observable<string> {
@@ -62,6 +66,6 @@ export class BlogService {
       content: text,
     };
     
-    return this.http.post(`${this.apiUrl}${blogId}/comments`, commentData, { headers });
-}
+    return this.http.post(`${this.apiUrl}/${blogId}/comments`, commentData, { headers });
+  }
 }
